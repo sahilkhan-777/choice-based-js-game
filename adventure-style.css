@@ -63,21 +63,25 @@ body {
 
 
 .live-score-update {
-
     background-color: #202020;
     padding: 0.5rem 1rem;
     width: 250px;
     height: 300px;
     border-radius: 10px;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    overflow-y: scroll;
 }
-.live-score-update h3{
-    margin-bottom: 0.5rem;
-    font-size: 1.2rem;
+.live-score-update::-webkit-scrollbar{
+    width: 8px;
+    background: transparent;
+    border-radius: 0 10px 10px 0;
 }
+.live-score-update::-webkit-scrollbar-thumb{
+    background: #202020 ;
+}
+
 .live-score-update .score-list{
     list-style-type: none;
-    overflow-y: auto;
 }
 .status-bar h3 {
     font-size: 1.2rem;
