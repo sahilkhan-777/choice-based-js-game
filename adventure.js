@@ -32,6 +32,7 @@ function noFlashLight() {
     flashLightIcon.style.fill = "green";
     let listItem = document.createElement('li');
     listItem.textContent = "Penalty: No flashlight";
+    scoreList.appendChild(listItem);
 }
 
 
@@ -55,12 +56,16 @@ function typeWriter(textElement, text, callback) {
 
 function checkStamina() {
     if (stamina <= 0) {
+        textArea.textContent = "";
+        firstChoiceButton.style.display = 'none';
+        secondChoiceButton.style.display = 'none';
+        staminaStatus.textContent = 0;
         typeWriter(textArea, "Your stamina went down to zero, you are exhausted. You cannot continue anymore!!", () => {
             setTimeout(()=>{
                 gameOver();
-                return true;
             }, 1000);
         });
+        return true;
     }
     return false;
 }
@@ -72,6 +77,7 @@ firstChoiceButton.classList.add('btn');
 let secondChoiceButton = document.createElement('button');
 secondChoiceButton.textContent = "Take the wide path";
 secondChoiceButton.classList.add('btn');
+
 
 firstChoiceButton.onclick = narrowPath;
 secondChoiceButton.onclick = widePath;
@@ -92,17 +98,15 @@ typeWriter(textArea, introText, () => {
 const scenarioNarrow = "You push aside the vines and find an old wooden bridge over a raging river. The boards look unstable. The bridge creaks under your weight. Do you:";
 
 function narrowPath() {
-    checkStamina();
     checkForWaterBottle();
+    if(checkStamina()) return;
     noFlashLight();
     textArea.textContent = "";
     firstChoiceButton.style.display = 'none';
     secondChoiceButton.style.display = 'none';
+    // debugger;
     typeWriter(textArea, scenarioNarrow, () => {
-
         setTimeout(() => {
-            scoreList.appendChild(listItem);
-
             firstChoiceButton.textContent = 'Cross carefully';
             secondChoiceButton.textContent = 'Look for another way';
 
@@ -119,8 +123,8 @@ function narrowPath() {
 const scenarioWide = "You walk for an hour and reach a clearing with an abandoned campsite. A backpack lies near the burnt firepit.";
 
 function widePath() {
-    checkStamina();
     textArea.textContent = "";
+    if(checkStamina()) return;
     firstChoiceButton.style.display = 'none';
     secondChoiceButton.style.display = 'none';
     typeWriter(textArea, scenarioWide, () => {
@@ -143,7 +147,7 @@ const scenarioRiverBank = "You reach the opposite bank. You find a narrow cliff 
 const scenarioCliffPath = "You carefully navigate the narrow cliff path, the wind howling around you. You reached the cave entrance. It's dark and foreboding.";
 
 function crossTheBridge() {
-    checkStamina();
+    if(checkStamina()) return;
     textArea.textContent = "";
     firstChoiceButton.style.display = 'none';
     secondChoiceButton.style.display = 'none';
@@ -195,7 +199,7 @@ function crossTheBridge() {
 const scenarioAnotherWay = "You follow the riverbank and discover a hidden cave entrance. Inside, it's pitch dark, but you hear faint dripping sounds.";
 
 function findAnotherWay() {
-    checkStamina();
+    if(checkStamina()) return;
     textArea.textContent = "";
     firstChoiceButton.style.display = 'none';
     secondChoiceButton.style.display = 'none';
@@ -219,7 +223,7 @@ function findAnotherWay() {
 const scenarioBackpack = "You kneel by the dusty pack. Inside, relics of another traveler — a flashlight, and a note, stained and trembling that says: 'Follow the tracks....beware the door.'";
 
 function checkSupplies() {
-    checkStamina();
+    if(checkStamina()) return;
     textArea.textContent = "";
     firstChoiceButton.style.display = 'none';
     secondChoiceButton.style.display = 'none';
@@ -247,7 +251,7 @@ function checkSupplies() {
 }
 const scenarioFollowTracks = "You follow the faint tracks leading away from the campsite, you arrive at a cave entrance. It's dark and foreboding.";
 function followTracks() {
-    checkStamina();
+    if(checkStamina()) return;
     firstChoiceButton.style.display = 'none';
     secondChoiceButton.style.display = 'none';
     textArea.textContent = "";
@@ -277,7 +281,7 @@ function followTracks() {
 const scenarioConfrontWatcher = "You step forward, towards the rustling bushes. A pair of glowing eyes stare back at you. You stumble backward, heart racing, before bolting blindly.";
 const scenarioConfrontWatcherEscape = "Branches scrape your arms until you break free...straight at the cave's shadow.";
 function confrontWatcher() {
-    checkStamina();
+    if(checkStamina()) return;
     textArea.textContent = "";
     firstChoiceButton.style.display = 'none';
     secondChoiceButton.style.display = 'none';
@@ -320,7 +324,7 @@ function confrontWatcher() {
 const scenarioIgnore = "You leave it behind. Soon after, you hear rustling in the bushes. Something is watching you.";
 function moveForward() {
     noFlashLight();
-    checkStamina();
+    if(checkStamina()) return;
     textArea.textContent = "";
     firstChoiceButton.style.display = 'none';
     secondChoiceButton.style.display = 'none';
@@ -341,7 +345,7 @@ const scenarioCave = "You find a large stone door with carvings of strange creat
 
 function enterCave() {
     checkForWaterBottle();
-    checkStamina();
+    if(checkStamina()) return;
     textArea.textContent = "";
     firstChoiceButton.style.display = 'none';
     secondChoiceButton.style.display = 'none';
@@ -363,7 +367,7 @@ function enterCave() {
 const scenarioRest = "You find a sheltered spot and rest. The sounds of the jungle lull you into a light sleep. You wake up feeling slightly better but still weary.";
 
 function restAndRecover() {
-    checkStamina();
+    if(checkStamina()) return;
     textArea.textContent = "";
     firstChoiceButton.style.display = 'none';
     secondChoiceButton.style.display = 'none';
@@ -416,7 +420,7 @@ const scenarioPushDoor = "The door doesn't move. Suddenly, the carvings glow, an
 
 function pushDoor() {
     checkForWaterBottle();
-    checkStamina();
+    if(checkStamina()) return;
     textArea.textContent = "";
     firstChoiceButton.style.display = 'none';
     secondChoiceButton.style.display = 'none';
@@ -437,7 +441,7 @@ function pushDoor() {
 const scenarioSearchKey = "You find the key buried in the sand near a broken statue and also take the metal sword from the statue. The door slowly creaks open, revealing the treasure chamber. But a Giant Snake is Guarding it!!!";
 function searchKey() {
     checkForWaterBottle();
-    checkStamina();
+    if(checkStamina()) return;
     textArea.textContent = "";
     firstChoiceButton.style.display = 'none';
     secondChoiceButton.style.display = 'none';
@@ -474,7 +478,7 @@ const scenarioTreasure = "The guardian's body turns to dust, revealing a gold sh
 
 function fightGuardian() {
     checkForWaterBottle();
-    checkStamina();
+    if(checkStamina()) return;
     textArea.textContent = "";
     firstChoiceButton.style.display = 'none';
     secondChoiceButton.style.display = 'none';
@@ -483,22 +487,24 @@ function fightGuardian() {
     if (inventory.includes('Metal Sword') && stamina >= 30 && health >= 60) {
         typeWriter(textArea, scenarioFightGuardianWin, () => {
             setTimeout(() => {
+                const listItem1 = document.createElement('li');
+                const listItem2 = document.createElement('li');
                 if (movementSlowed === true) {
                     stamina -= 50;
                     health -= 50;
+                    listItem1.textContent = "-50 Stamina";
+                    listItem2.textContent = "-50 Health";
                 }
                 else {
                     stamina -= 25;
                     health -= 25;
+                    listItem1.textContent = "-25 Stamina";
+                    listItem2.textContent = "-25 Health";
                 }
                 staminaStatus.textContent = stamina;
-                const listItem1 = document.createElement('li');
-                listItem1.textContent = `-${stamina}  Stamina`;
-                scoreList.appendChild(listItem1);
-                
                 healthStatus.textContent = health;
-                const listItem2 = document.createElement('li');
-                listItem2.textContent = `-${health}  Health`;
+                
+                scoreList.appendChild(listItem1);
                 scoreList.appendChild(listItem2);
 
                 textArea.textContent = "";
@@ -536,8 +542,8 @@ function fightGuardian() {
 const scenarioRunAway = "You sprint back to the river, the Guardian's hiss echoing behind you. You are safe for now, but the treasure remains out of reach.";
 
 function runAway() {
-    checkStamina();
     checkForWaterBottle();
+    if(checkStamina()) return;
     textArea.textContent = "";
     firstChoiceButton.style.display = 'none';
     secondChoiceButton.style.display = 'none';
@@ -559,7 +565,7 @@ const scenarioRushTowardsTreasure = "You rushed towards the treasure stepping on
 
 function rushTowardsTreasure() {
     checkForWaterBottle();
-    checkStamina();
+    if(checkStamina()) return;
     textArea.textContent = "";
     typeWriter(textArea, scenarioRushTowardsTreasure, () => {
         setTimeout(() => {
@@ -583,8 +589,8 @@ const scenarioLookForTraps = "You carefully examine the floor plates, noticing a
 
 function lookForTraps() {
     checkForWaterBottle();
-    checkStamina();
     textArea.textContent = "";
+    if(checkStamina()) return;
     firstChoiceButton.style.display = 'none';
     secondChoiceButton.style.display = 'none';
     typeWriter(textArea, scenarioLookForTraps, () => {
